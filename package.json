@@ -1,0 +1,95 @@
+{
+  "name": "unlucky-launcher",
+  "productName": "Unlucky",
+  "version": "1.5.1",
+  "description": "Минималистичный лаунчер для Minecraft: версии, ник, редактор скинов",
+  "main": "src/main/main.js",
+  "author": "Unlucky",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "test": "node --test \"test/*.test.js\"",
+    "dist:win": "electron-builder --win nsis --x64 --publish never",
+    "dist:linux": "electron-builder --linux",
+    "dist:mac": "electron-builder --mac",
+    "dist": "electron-builder"
+  },
+  "dependencies": {
+    "@fontsource-variable/onest": "^5.2.5",
+    "@fontsource/pixelify-sans": "^5.2.5",
+    "adm-zip": "^0.5.16",
+    "pngjs": "^7.0.0"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.16",
+    "electron": "45.2.3",
+    "electron-builder": "^26.0.0"
+  },
+  "build": {
+    "appId": "app.unlucky.launcher",
+    "productName": "Unlucky",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "src/**/*",
+      "build/icon.png",
+      "package.json",
+      "!**/*.map"
+    ],
+    "asar": true,
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "signExecutable": false
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "icon": "build/icon.png",
+      "category": "Game"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "icon": "build/icon.png",
+      "category": "public.app-category.games"
+    },
+    "electronLanguages": [
+      "ru",
+      "en-US"
+    ],
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "guid": "D845B1B8-22B5-4D13-A515-A09468D1F938",
+      "artifactName": "Unlucky-Setup-${version}.exe",
+      "shortcutName": "Unlucky",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": false,
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico",
+      "installerLanguages": [
+        "ru_RU",
+        "en_US"
+      ],
+      "include": "build/installer.nsh",
+      "differentialPackage": false
+    },
+    "publish": null
+  }
+}

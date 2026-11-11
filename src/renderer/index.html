@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unlucky</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="theme.js"></script>
+</head>
+<body>
+
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-min" viewBox="0 0 24 24"><path d="M6 12h12"/></symbol>
+  <symbol id="i-max" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1.5"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol>
+  <symbol id="i-terminal" viewBox="0 0 24 24"><path d="M5 8l4.5 4L5 16M12 17h7"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M7 9.5l5 5 5-5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5.5 12.5l4.2 4.2L18.5 8"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5.5v13M5.5 12h13"/></symbol>
+  <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4.5 19.5l1-4L16.2 4.8a1.8 1.8 0 0 1 2.5 0l.5.5a1.8 1.8 0 0 1 0 2.5L8.5 18.5z"/><path d="M14.5 6.5l3 3"/></symbol>
+  <symbol id="i-eraser" viewBox="0 0 24 24"><path d="M9 19.5H5.7l-1.4-1.4a1.8 1.8 0 0 1 0-2.5L14.6 5.3a1.8 1.8 0 0 1 2.5 0l3.6 3.6a1.8 1.8 0 0 1 0 2.5L11.5 20.7"/><path d="M8 11.5l6 6M12 19.5h8"/></symbol>
+  <symbol id="i-fill" viewBox="0 0 24 24"><path d="M5.5 12.5l6.2-6.2 6 6-6.2 6.2a1.8 1.8 0 0 1-2.5 0l-3.5-3.5a1.8 1.8 0 0 1 0-2.5z"/><path d="M11.7 6.3L9 3.6M19.5 15.5c0 0 1.8 2 1.8 3.2a1.8 1.8 0 0 1-3.6 0c0-1.2 1.8-3.2 1.8-3.2z"/></symbol>
+  <symbol id="i-pipette" viewBox="0 0 24 24"><path d="M14.5 6.5l3 3M15.8 5.2l1.5-1.5a2 2 0 0 1 2.9 2.9l-1.5 1.5"/><path d="M16.8 9.5L9 17.3l-3.4 1.1 1.1-3.4L14.5 7.2"/></symbol>
+  <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 5L4.5 9.5 9 14"/><path d="M5 9.5h9.5a5 5 0 0 1 0 10H11"/></symbol>
+  <symbol id="i-redo" viewBox="0 0 24 24"><path d="M15 5l4.5 4.5L15 14"/><path d="M19 9.5H9.5a5 5 0 0 0 0 10H13"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M12 15.5V4.5M7.5 9L12 4.5 16.5 9"/><path d="M5 15v3.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V15"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4.5v11M7.5 11L12 15.5 16.5 11"/><path d="M5 19.5h14"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="10.5" height="10.5" rx="2"/><path d="M15 9V6.5a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 5 6.5v7A1.5 1.5 0 0 0 6.5 15H9"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M10 4.5h4M7 7l.8 12a1 1 0 0 0 1 .9h6.4a1 1 0 0 0 1-.9L17 7M10.5 11v5M13.5 11v5"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M4 7.5A1.5 1.5 0 0 1 5.5 6H10l2 2h6.5A1.5 1.5 0 0 1 20 9.5v8a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5z"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><path d="M4.5 4.5h15v15h-15zM4.5 9.5h15M4.5 14.5h15M9.5 4.5v15M14.5 4.5v15"/></symbol>
+  <symbol id="i-guides" viewBox="0 0 24 24"><rect x="4.5" y="4.5" width="15" height="15" rx="1.5" stroke-dasharray="2.6 2.6"/><path d="M12 4.5v15M4.5 12h15"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M19 12a7 7 0 1 1-2.1-5"/><path d="M19.5 4.5V8.5H15.5"/></symbol>
+</svg>
+
+<header class="titlebar">
+  <div class="brand">
+    <span class="logo" role="img" aria-hidden="true"></span>
+    <span class="wordmark">Unlucky</span>
+  </div>
+  <nav class="tabs" role="tablist" aria-label="Разделы">
+    <button class="tab" role="tab" data-view="play" aria-selected="true">Играть</button>
+    <button class="tab" role="tab" data-view="skins" aria-selected="false">Скины</button>
+    <button class="tab" role="tab" data-view="friends" aria-selected="false">Друзья<span class="badge" id="fr-badge" hidden></span></button>
+    <button class="tab" role="tab" data-view="settings" aria-selected="false">Настройки</button>
+  </nav>
+  <div class="spacer"></div>
+  <button class="icon-btn" id="btn-log" title="Журнал игры" aria-label="Журнал игры"><svg viewBox="0 0 24 24"><use href="#i-terminal"/></svg></button>
+  <div class="win-controls">
+    <button class="win-btn" data-win="minimize" title="Свернуть" aria-label="Свернуть"><svg viewBox="0 0 24 24"><use href="#i-min"/></svg></button>
+    <button class="win-btn" data-win="maximize" title="Развернуть" aria-label="Развернуть"><svg viewBox="0 0 24 24"><use href="#i-max"/></svg></button>
+    <button class="win-btn win-close" data-win="close" title="Закрыть" aria-label="Закрыть"><svg viewBox="0 0 24 24"><use href="#i-close"/></svg></button>
+  </div>
+</header>
+
+<main>
+  <!-- ======================= Играть ======================= -->
+  <section class="view" id="view-play">
+    <div class="stage">
+      <canvas id="play-canvas"></canvas>
+      <div class="stage-caption">
+        <span id="play-skin-name"></span>
+        <button class="link" id="play-edit-skin">Изменить скин</button>
+      </div>
+    </div>
+
+    <div class="launch">
+      <div class="field">
+        <span class="field-label" id="acc-label">Аккаунт</span>
+        <button class="select" id="acc-btn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="acc-label acc-current">
+          <canvas class="avatar" id="acc-avatar" width="8" height="8" aria-hidden="true"></canvas>
+          <span class="select-value" id="acc-current">Загрузка…</span>
+          <span class="select-meta" id="acc-meta"></span>
+          <svg viewBox="0 0 24 24"><use href="#i-chevron"/></svg>
+        </button>
+        <span class="field-hint" id="acc-hint"></span>
+        <div class="popover" id="acc-pop" hidden>
+          <ul class="pop-list" id="acc-list" role="listbox" aria-label="Аккаунты"></ul>
+          <div class="pop-add">
+            <button class="btn ghost small" id="acc-add-offline" title="Только ник, без проверки лицензии">Оффлайн</button>
+            <button class="btn ghost small" id="acc-add-ely" title="Бесплатный аккаунт Ely.by">Ely.by</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label" id="ver-label">Версия</span>
+        <button class="select" id="ver-btn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="ver-label ver-current">
+          <span class="select-value" id="ver-current">Загрузка списка…</span>
+          <span class="select-meta" id="ver-meta"></span>
+          <svg viewBox="0 0 24 24"><use href="#i-chevron"/></svg>
+        </button>
+        <div class="popover" id="ver-pop" hidden>
+          <div class="pop-types">
+            <div class="seg wide" id="ver-loader" role="radiogroup" aria-label="Тип версии">
+              <button class="seg-btn txt" data-loader="vanilla" role="radio" aria-checked="true">Vanilla</button>
+              <button class="seg-btn txt" data-loader="fabric" role="radio" aria-checked="false">Fabric</button>
+              <button class="seg-btn txt" data-loader="forge" role="radio" aria-checked="false">Forge</button>
+            </div>
+          </div>
+          <div class="pop-search">
+            <svg viewBox="0 0 24 24"><use href="#i-search"/></svg>
+            <input id="ver-search" type="text" placeholder="Найти версию" spellcheck="false" autocomplete="off" aria-label="Найти версию">
+            <button class="chip" id="ver-snap" aria-pressed="false" title="Показывать снапшоты">Снапшоты</button>
+          </div>
+          <ul class="pop-list" id="ver-list" role="listbox"></ul>
+        </div>
+      </div>
+
+      <div class="action">
+        <button class="play" id="play-btn">Играть</button>
+        <div class="progress" id="progress" hidden><i id="bar-fill"></i></div>
+        <p class="status" id="status" role="status"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= Скины ======================= -->
+  <section class="view" id="view-skins" hidden>
+    <aside class="skin-list">
+      <div class="list-head">
+        <h2>Мои скины</h2>
+        <button class="icon-btn" id="sk-new" title="Новый скин" aria-label="Новый скин"><svg viewBox="0 0 24 24"><use href="#i-plus"/></svg></button>
+      </div>
+      <ul id="sk-list" class="sk-items"></ul>
+      <div class="list-foot">
+        <button class="btn ghost" id="sk-import"><svg viewBox="0 0 24 24"><use href="#i-file"/></svg>Из файла</button>
+        <button class="btn ghost" id="sk-nick"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg>По нику</button>
+      </div>
+    </aside>
+
+    <div class="editor">
+      <div class="toolbar">
+        <div class="seg" id="tools" role="radiogroup" aria-label="Инструмент">
+          <button class="seg-btn" data-tool="pencil" title="Карандаш (P)" aria-label="Карандаш" aria-checked="true"><svg viewBox="0 0 24 24"><use href="#i-pencil"/></svg></button>
+          <button class="seg-btn" data-tool="eraser" title="Ластик (E)" aria-label="Ластик" aria-checked="false"><svg viewBox="0 0 24 24"><use href="#i-eraser"/></svg></button>
+          <button class="seg-btn" data-tool="fill" title="Заливка грани (F)" aria-label="Заливка" aria-checked="false"><svg viewBox="0 0 24 24"><use href="#i-fill"/></svg></button>
+          <button class="seg-btn" data-tool="picker" title="Пипетка (I)" aria-label="Пипетка" aria-checked="false"><svg viewBox="0 0 24 24"><use href="#i-pipette"/></svg></button>
+        </div>
+        <div class="seg" id="brushes" role="radiogroup" aria-label="Размер кисти">
+          <button class="seg-btn txt" data-brush="1" title="Кисть 1 px" aria-checked="true">1</button>
+          <button class="seg-btn txt" data-brush="2" title="Кисть 2 px" aria-checked="false">2</button>
+          <button class="seg-btn txt" data-brush="3" title="Кисть 3 px" aria-checked="false">3</button>
+        </div>
+        <div class="seg" role="group" aria-label="Вид">
+          <button class="seg-btn" id="t-guides" title="Разметка граней" aria-label="Разметка граней" aria-pressed="true"><svg viewBox="0 0 24 24"><use href="#i-guides"/></svg></button>
+          <button class="seg-btn" id="t-grid" title="Сетка пикселей" aria-label="Сетка пикселей" aria-pressed="true"><svg viewBox="0 0 24 24"><use href="#i-grid"/></svg></button>
+        </div>
+        <span class="spacer"></span>
+        <button class="icon-btn" id="ed-undo" title="Отменить (Ctrl+Z)" aria-label="Отменить" disabled><svg viewBox="0 0 24 24"><use href="#i-undo"/></svg></button>
+        <button class="icon-btn" id="ed-redo" title="Повторить (Ctrl+Shift+Z)" aria-label="Повторить" disabled><svg viewBox="0 0 24 24"><use href="#i-redo"/></svg></button>
+      </div>
+
+      <div class="canvas-stage" id="ed-stage">
+        <div class="canvas-wrap">
+          <canvas id="ed-view"></canvas>
+          <canvas id="ed-guides"></canvas>
+        </div>
+      </div>
+
+      <div class="colorbar">
+        <input class="color-input" id="ed-color" type="color" value="#54c2a9" aria-label="Цвет">
+        <input class="input hex" id="ed-hex" type="text" value="#54c2a9" maxlength="7" spellcheck="false" aria-label="Цвет в HEX">
+        <div class="palette" id="palette"></div>
+      </div>
+      <p class="legend">Сплошная линия — основной слой, пунктир — внешний. Правая кнопка мыши — ластик, Alt — пипетка.</p>
+    </div>
+
+    <aside class="skin-side">
+      <div class="preview">
+        <canvas id="ed-preview"></canvas>
+        <div class="chips">
+          <button class="chip" id="t-overlay" aria-pressed="true">Внешний слой</button>
+          <button class="chip" id="t-anim" aria-pressed="false">Анимация</button>
+        </div>
+      </div>
+
+      <div class="side-body">
+        <div class="field">
+          <label class="field-label" for="sk-name">Название</label>
+          <input class="input" id="sk-name" type="text" maxlength="32" autocomplete="off">
+        </div>
+
+        <div class="field">
+          <span class="field-label">Руки</span>
+          <div class="seg wide" id="models" role="radiogroup" aria-label="Тип рук">
+            <button class="seg-btn txt" data-model="classic" aria-checked="true">Обычные</button>
+            <button class="seg-btn txt" data-model="slim" aria-checked="false">Тонкие</button>
+          </div>
+        </div>
+
+        <div class="side-actions">
+          <button class="btn primary block" id="sk-use">Использовать в игре</button>
+          <button class="btn ghost block" id="sk-account" hidden><svg viewBox="0 0 24 24"><use href="#i-file"/></svg><span id="sk-account-text">Загрузить на Ely.by</span></button>
+          <div class="btn-row">
+            <button class="btn ghost" id="sk-export" title="Сохранить как PNG"><svg viewBox="0 0 24 24"><use href="#i-download"/></svg>PNG</button>
+            <button class="btn ghost" id="sk-dup" title="Дублировать"><svg viewBox="0 0 24 24"><use href="#i-copy"/></svg>Копия</button>
+            <button class="btn ghost danger" id="sk-del" title="Удалить"><svg viewBox="0 0 24 24"><use href="#i-trash"/></svg></button>
+          </div>
+          <p class="saved" id="sk-saved"></p>
+          <p class="side-note" id="sk-account-note"></p>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ======================= Друзья ======================= -->
+  <section class="view" id="view-friends" hidden>
+    <div class="fr-intro" id="fr-intro" hidden>
+      <div class="fr-intro-box">
+        <h1>Друзья</h1>
+        <p id="fr-intro-text"></p>
+        <ul class="fr-facts" id="fr-facts">
+          <li>Другие игроки увидят ваш ник, голову из скина и то, в сети ли вы и во что играете.</li>
+          <li>Скрыть статус можно в любой момент одним переключателем.</li>
+          <li>Добавляют друг друга по коду, поэтому чужим ником назваться нельзя. Пароли и файлы игры никуда не отправляются.</li>
+        </ul>
+        <div class="fr-intro-actions">
+          <button class="btn primary" id="fr-enable">Включить друзей</button>
+          <button class="btn ghost" id="fr-setup">Указать сервер</button>
+        </div>
+        <p class="side-note" id="fr-intro-host"></p>
+      </div>
+    </div>
+
+    <div class="fr-grid" id="fr-main" hidden>
+      <div class="fr-col">
+        <div class="list-head">
+          <h2>Друзья <span class="fr-count" id="fr-count"></span></h2>
+          <button class="icon-btn" id="fr-refresh" title="Обновить" aria-label="Обновить"><svg viewBox="0 0 24 24"><use href="#i-refresh"/></svg></button>
+        </div>
+        <div class="fr-scroll">
+          <div class="fr-banner" id="fr-banner" hidden>
+            <span id="fr-banner-text"></span>
+            <button class="btn ghost small" id="fr-banner-retry">Повторить</button>
+          </div>
+          <div class="fr-section" id="fr-in-box" hidden>
+            <h3>Хотят добавить вас</h3>
+            <ul class="fr-items" id="fr-in"></ul>
+          </div>
+          <ul class="fr-items" id="fr-list"></ul>
+          <p class="fr-empty" id="fr-empty"></p>
+          <div class="fr-section" id="fr-out-box" hidden>
+            <h3>Отправленные заявки</h3>
+            <ul class="fr-items" id="fr-out"></ul>
+          </div>
+        </div>
+      </div>
+
+      <aside class="fr-side">
+        <div class="side-body">
+          <div class="field">
+            <span class="field-label">Мой код</span>
+            <div class="code-box">
+              <code id="fr-code">…</code>
+              <button class="icon-btn" id="fr-copy" title="Скопировать код" aria-label="Скопировать код"><svg viewBox="0 0 24 24"><use href="#i-copy"/></svg></button>
+            </div>
+            <span class="side-note">Отправьте код другу, а он введёт его у себя.</span>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="fr-add-input">Добавить друга</label>
+            <div class="add-row">
+              <input class="input" id="fr-add-input" type="text" maxlength="24" spellcheck="false" autocomplete="off" placeholder="UNL-XXXX-XXXX">
+              <button class="btn primary" id="fr-add">Добавить</button>
+            </div>
+            <span class="field-hint" id="fr-add-err"></span>
+          </div>
+
+          <div class="side-row">
+            <div class="row-text"><b>Показывать мой статус</b><span>Друзья видят, что вы в сети и во что играете.</span></div>
+            <label class="switch"><input type="checkbox" id="fr-visible"><i></i></label>
+          </div>
+
+          <div class="side-actions">
+            <div class="btn-row">
+              <button class="btn ghost" id="fr-newcode" title="Прежний код перестанет работать, друзья останутся">Новый код</button>
+              <button class="btn ghost" id="fr-server">Сервер</button>
+            </div>
+            <div class="btn-row">
+              <button class="btn ghost" id="fr-off">Выключить</button>
+              <button class="btn ghost danger" id="fr-delete" title="Профиль, друзья и заявки будут удалены с сервера">Удалить данные</button>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ======================= Настройки ======================= -->
+  <section class="view" id="view-settings" hidden>
+    <div class="settings">
+      <h1>Настройки</h1>
+
+      <div class="row">
+        <div class="row-text"><b>Тема</b><span>Оформление лаунчера. По умолчанию — светлая.</span></div>
+        <div class="row-ctl">
+          <div class="seg" id="s-theme" role="radiogroup" aria-label="Тема">
+            <button class="seg-btn txt" data-theme="light" aria-checked="true">Светлая</button>
+            <button class="seg-btn txt" data-theme="dark" aria-checked="false">Тёмная</button>
+            <button class="seg-btn txt" data-theme="system" aria-checked="false">Как в системе</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-text"><b>Оперативная память</b><span>Сколько памяти выделить игре. Для обычной игры хватает 3–4 ГБ.</span></div>
+        <div class="row-ctl ram"><input type="range" id="s-ram" min="1024" max="8192" step="512"><output id="s-ram-out">4 ГБ</output></div>
+      </div>
+
+      <div class="row">
+        <div class="row-text"><b>Java</b><span id="s-java-hint">Лаунчер сам скачает нужную версию Java.</span></div>
+        <div class="row-ctl java">
+          <div class="seg" id="s-java-mode" role="radiogroup" aria-label="Режим Java">
+            <button class="seg-btn txt" data-java="auto" aria-checked="true">Авто</button>
+            <button class="seg-btn txt" data-java="custom" aria-checked="false">Свой путь</button>
+          </div>
+          <div class="path-row" id="s-java-row" hidden>
+            <input class="input" id="s-java" type="text" placeholder="Путь к java или javaw" spellcheck="false">
+            <button class="btn ghost" id="s-java-pick">Выбрать</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-text"><b>Папка игры</b><span id="s-dir">—</span></div>
+        <div class="row-ctl btns">
+          <button class="btn ghost" id="s-dir-open"><svg viewBox="0 0 24 24"><use href="#i-folder"/></svg>Открыть</button>
+          <button class="btn ghost" id="s-dir-pick">Изменить</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-text"><b>Моды</b><span>Для Fabric и Forge: положите файлы .jar в папку mods. Тип версии выбирается в списке версий на вкладке «Играть».</span></div>
+        <div class="row-ctl"><button class="btn ghost" id="s-mods-open"><svg viewBox="0 0 24 24"><use href="#i-folder"/></svg>Открыть mods</button></div>
+      </div>
+
+      <div class="row">
+        <div class="row-text"><b>Мой скин в игре</b><span>Только для оффлайн-аккаунтов: подключает выбранный скин как ресурспак. У аккаунта Ely.by скин берётся с сайта Ely.by.</span></div>
+        <div class="row-ctl"><label class="switch"><input type="checkbox" id="s-skin"><i></i></label></div>
+      </div>
+
+      <div class="row">
+        <div class="row-text"><b>Русский язык в игре</b><span>Только при первом запуске, пока в игре нет своих настроек.</span></div>
+        <div class="row-ctl"><label class="switch"><input type="checkbox" id="s-lang"><i></i></label></div>
+      </div>
+
+      <div class="row">
+        <div class="row-text"><b>Сворачивать лаунчер</b><span>На время игры. Вернётся сам, когда игра закроется.</span></div>
+        <div class="row-ctl"><label class="switch"><input type="checkbox" id="s-hide"><i></i></label></div>
+      </div>
+
+      <div class="row">
+        <div class="row-text"><b>Аргументы JVM</b><span>Для опытных. Например: -XX:+UseG1GC</span></div>
+        <div class="row-ctl wide"><input class="input" id="s-jvm" type="text" spellcheck="false" autocomplete="off"></div>
+      </div>
+
+      <p class="about" id="about">Unlucky — неофициальный лаунчер. Файлы игры скачиваются с серверов Mojang. Minecraft — торговая марка Mojang AB.</p>
+    </div>
+  </section>
+</main>
+
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <b>Журнал</b>
+    <span class="spacer"></span>
+    <button class="btn ghost small" id="log-copy">Копировать</button>
+    <button class="btn ghost small" id="log-clear">Очистить</button>
+    <button class="icon-btn" id="log-close" aria-label="Закрыть журнал"><svg viewBox="0 0 24 24"><use href="#i-close"/></svg></button>
+  </div>
+  <pre id="log" tabindex="0"></pre>
+</aside>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<dialog id="dlg-nick">
+  <form method="dialog">
+    <h3>Скин по нику</h3>
+    <p>Введите ник игрока с лицензией — лаунчер скачает его скин в вашу коллекцию.</p>
+    <input class="input" id="dlg-nick-input" type="text" maxlength="16" spellcheck="false" autocomplete="off" placeholder="Ник игрока">
+    <p class="field-hint" id="dlg-nick-err"></p>
+    <div class="dlg-actions">
+      <button class="btn ghost" value="cancel">Отмена</button>
+      <button class="btn primary" id="dlg-nick-ok" value="ok">Скачать</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dlg-offline">
+  <form method="dialog">
+    <h3 id="dlg-offline-title">Оффлайн-аккаунт</h3>
+    <p>Игра запускается без проверки лицензии: для одиночной игры и серверов с отключённой проверкой. Ваш скин в таком режиме видите только вы.</p>
+    <input class="input" id="dlg-offline-input" type="text" maxlength="16" spellcheck="false" autocomplete="off" placeholder="Ник игрока">
+    <p class="field-hint" id="dlg-offline-err"></p>
+    <div class="dlg-actions">
+      <button class="btn ghost" value="cancel">Отмена</button>
+      <button class="btn primary" id="dlg-offline-ok" value="ok">Сохранить</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dlg-ely">
+  <form method="dialog">
+    <h3>Вход через Ely.by</h3>
+    <p>Бесплатный аккаунт со своим скином. Его видят игроки на серверах, которые принимают Ely.by. Пароль лаунчер не хранит. <button type="button" class="link" id="ely-register">Создать аккаунт</button></p>
+    <div class="stack">
+      <input class="input" id="ely-login" type="text" placeholder="Ник или e-mail" spellcheck="false" autocomplete="username">
+      <input class="input" id="ely-pass" type="password" placeholder="Пароль" autocomplete="current-password">
+      <input class="input" id="ely-totp" type="text" inputmode="numeric" maxlength="8" placeholder="Код из приложения-аутентификатора" autocomplete="one-time-code" hidden>
+    </div>
+    <p class="field-hint" id="ely-err"></p>
+    <div class="dlg-actions">
+      <button class="btn ghost" id="ely-cancel" value="cancel">Отмена</button>
+      <button class="btn primary" id="ely-ok" value="ok">Войти</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dlg-fr-server">
+  <form method="dialog">
+    <h3>Сервер друзей</h3>
+    <p>Друзья работают через бесплатный проект Supabase. Вставьте адрес проекта и <b>публичный</b> ключ (anon или publishable). Секретный ключ вставлять нельзя.</p>
+    <div class="stack">
+      <input class="input" id="frs-url" type="text" placeholder="https://xxxx.supabase.co" spellcheck="false" autocomplete="off">
+      <input class="input" id="frs-key" type="text" placeholder="Публичный ключ" spellcheck="false" autocomplete="off">
+    </div>
+    <p class="field-hint" id="frs-err"></p>
+    <div class="dlg-actions">
+      <button class="btn ghost" id="frs-reset" type="button" title="Вернуть сервер, вшитый в эту сборку">Сбросить</button>
+      <span class="spacer"></span>
+      <button class="btn ghost" value="cancel">Отмена</button>
+      <button class="btn primary" id="frs-ok" value="ok">Сохранить</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dlg-confirm">
+  <form method="dialog">
+    <h3 id="dlg-confirm-title">Удалить скин?</h3>
+    <p id="dlg-confirm-text"></p>
+    <div class="dlg-actions">
+      <button class="btn ghost" value="cancel">Отмена</button>
+      <button class="btn danger-fill" id="dlg-confirm-ok" value="ok">Удалить</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="../shared/skin-layout.js"></script>
+<script src="skin-viewer.js"></script>
+<script src="skin-editor.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
